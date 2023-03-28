@@ -12,7 +12,7 @@ public class BankerHttpApiHostMigrationsDbContextFactory : IDesignTimeDbContextF
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<BankerHttpApiHostMigrationsDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("Banker"));
+            .UseNpgsql(configuration.GetConnectionString("Banker"));
 
         return new BankerHttpApiHostMigrationsDbContext(builder.Options);
     }

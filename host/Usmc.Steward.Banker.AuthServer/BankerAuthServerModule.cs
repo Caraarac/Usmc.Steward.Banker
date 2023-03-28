@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -8,10 +5,13 @@ using Microsoft.AspNetCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Usmc.Steward.Banker.MultiTenancy;
-using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Validation.AspNetCore;
+using StackExchange.Redis;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Usmc.Steward.Banker.MultiTenancy;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Admin.Web;
@@ -29,7 +29,7 @@ using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Data;
 using Volo.Abp.Emailing;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
@@ -48,6 +48,7 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.Threading;
+using Volo.Abp.Timing;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Saas.EntityFrameworkCore;
 using Volo.Saas.Host;
@@ -67,7 +68,7 @@ namespace Usmc.Steward.Banker;
     typeof(AbpAuditLoggingEntityFrameworkCoreModule),
     typeof(AbpAutofacModule),
     typeof(AbpCachingStackExchangeRedisModule),
-    typeof(AbpEntityFrameworkCoreSqlServerModule),
+    typeof(AbpEntityFrameworkCorePostgreSqlModule),
     typeof(AbpIdentityProEntityFrameworkCoreModule),
     typeof(AbpIdentityApplicationModule),
     typeof(AbpIdentityHttpApiModule),
@@ -116,9 +117,14 @@ public class BankerAuthServerModule : AbpModule
 
         context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
 
+        Configure<AbpClockOptions>(options =>
+        {
+            options.Kind = DateTimeKind.Utc;
+        });
+
         Configure<AbpDbContextOptions>(options =>
         {
-            options.UseSqlServer();
+            options.UseNpgsql();
         });
 
         context.Services.AddAbpSwaggerGenWithOAuth(

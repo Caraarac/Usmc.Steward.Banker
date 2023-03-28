@@ -12,7 +12,7 @@ public class AuthServerHostMigrationsDbContextFactory : IDesignTimeDbContextFact
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<AuthServerHostMigrationsDbContext>()
-            .UseSqlServer(configuration.GetConnectionString("Default"));
+            .UseNpgsql(configuration.GetConnectionString("Default"));
 
         return new AuthServerHostMigrationsDbContext(builder.Options);
     }

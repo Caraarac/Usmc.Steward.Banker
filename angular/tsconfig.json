@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@usmc.Steward/banker": [
+        "projects/banker/src/public-api.ts"
+      ],
+      "@usmc.Steward/banker/config": [
+        "projects/banker/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/banker/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/banker/src/lib/proxy/*"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Usmc.Steward.Banker</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.MongoDB" Version="7.0.3" />
+    <ProjectReference Include="..\Usmc.Steward.Banker.Domain\Usmc.Steward.Banker.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

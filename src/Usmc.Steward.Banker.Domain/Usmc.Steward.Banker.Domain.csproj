@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Usmc.Steward.Banker</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="7.0.3" />
+    <PackageReference Include="Volo.Abp.Caching" Version="7.0.3" />
+    <ProjectReference Include="..\Usmc.Steward.Banker.Domain.Shared\Usmc.Steward.Banker.Domain.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
